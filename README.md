@@ -1,2 +1,1 @@
-# vote-console
-vote console ui with antd
+# 投票系统
