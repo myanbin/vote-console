@@ -20,7 +20,6 @@ class Console extends React.Component {
           </Menu>
         </aside>
         <div className="ant-layout-main">
-          <div className="ant-layout-header"></div>
           <div className="ant-layout-breadcrumb">
             <Breadcrumb>
               <Breadcrumb.Item><a href="">首页</a></Breadcrumb.Item>
