@@ -28,14 +28,12 @@ class FormDemo extends React.Component {
     const rules = []
     Array.from([{
       id: "judges",
-      name:"评委人数",
-      type:"number",
-      input:"text",
+      name: "评委人数",
+      input: "text",
     }, {
       id: "ratio",
-      name:"通过比例",
-      type:"number",
-      input:"selectandedit",
+      name: "通过比例",
+      input: "selectandedit",
     }]).map((rule, index) => {
       let options = new Map([
         [0, "不设置通过比例"],
@@ -63,11 +61,11 @@ let RuleForm = Form.create()(FormDemo)
 
 class Configure extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
-      rules: {},
+      rules: [],
       candidates: [],
       inputs: [],
     }
@@ -75,7 +73,7 @@ class Configure extends React.Component {
 
   componentDidMount = () => {
 
-    const rules = {}
+    const rules = []
 
 
     const candidates = []
@@ -86,7 +84,7 @@ class Configure extends React.Component {
 
 
   handleRulesChange = (rules) => {
-    console.log(rules)
+    this.setState({...this.state.rules, ...rules})
   }
 
   handleCandidatesChange = (inputs) => {

@@ -36,7 +36,7 @@ class Console extends React.Component {
             </div>
           </div>
           <div className="ant-layout-footer">
-          Ant Design 版权所有 © 2015 由蚂蚁金服体验技术部支持
+            版权所有 &copy; 2016 由技术局自主研发小组支持
           </div>
         </div>
       </div>

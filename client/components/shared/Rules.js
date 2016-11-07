@@ -22,23 +22,29 @@ class RuleNumber extends React.Component {
 }
 
 class RuleSelect extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       value: 0
     }
   }
+
+  handleChange = (value) => {
+    console.log(value)
+    this.setState({value})
+  }
+
   render = () => {
     let options = []
     for (let [key, value] of this.props.options.entries()) {
       options.push(
-        <Select.Option key={key} value={key.toString()}>{value}</Select.Option>
+        <Select.Option key={key.toString()} value={key.toString()}>{value}</Select.Option>
       )
     }
     return (
       <div>
-        <Select>
+        <Select onChange={this.handleChange}>
           {options}
           <Select.Option value="-1">其他值</Select.Option>
         </Select>

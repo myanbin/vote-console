@@ -7,8 +7,8 @@ import io from 'socket.io-client'
 
 class Monitor extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       judges: []
@@ -49,7 +49,7 @@ class Monitor extends React.Component {
     }];
     return (
       <div>
-        <h1>投票监控</h1>
+        <h2>投票监控</h2>
         <Table columns={columns} dataSource={this.state.judges} size="middle" pagination={false} />
       </div>
     )
