@@ -20,6 +20,7 @@ class Console extends React.Component {
           </Menu>
         </aside>
         <div className="ant-layout-main">
+          <div className="ant-layout-header"></div>
           <div className="ant-layout-breadcrumb">
             <Breadcrumb>
               <Breadcrumb.Item><a href="">首页</a></Breadcrumb.Item>
@@ -29,9 +30,7 @@ class Console extends React.Component {
           </div>
           <div className="ant-layout-container">
             <div className="ant-layout-content">
-              <div style={{ height: 590 }}>
-                {this.props.children}
-              </div>
+              {this.props.children}
             </div>
           </div>
           <div className="ant-layout-footer">

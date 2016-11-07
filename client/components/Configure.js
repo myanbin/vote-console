@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Form, Transfer } from 'antd'
+import { Button, Icon, Popconfirm, Form, Transfer, message } from 'antd'
 import { RuleInput, RuleNumber, RuleSelect } from './shared/Rules'
 
 
@@ -27,19 +27,19 @@ class FormDemo extends React.Component {
     }
     const rules = []
     Array.from([{
-      id: "judges",
-      name: "评委人数",
-      input: "text",
+      id: 'judges',
+      name: '评委人数',
+      input: 'text',
     }, {
-      id: "ratio",
-      name: "通过比例",
-      input: "selectandedit",
+      id: 'ratio',
+      name: '通过比例',
+      input: 'selectandedit',
     }]).map((rule, index) => {
       let options = new Map([
-        [0, "不设置通过比例"],
-        [0.5, "半数以上评委投票"],
-        [0.66666, "三分之二以上评委投票"],
-        [1, "需全部评委投票"],
+        [0, '不设置通过比例'],
+        [0.5, '半数以上评委投票'],
+        [0.66666, '三分之二以上评委投票'],
+        [1, '需全部评委投票'],
       ])
       rules.push(
         <Form.Item {...formItemLayout} key={index} label={rule.name}>
@@ -91,6 +91,13 @@ class Configure extends React.Component {
     this.setState({inputs})
   }
 
+  confirm = () => {
+    console.log('Click on Yes')
+  }
+  cancel = () => {
+    console.log('Click on No')
+  }
+
   render = () => {
     return (
       <div>
@@ -100,11 +107,21 @@ class Configure extends React.Component {
         <Transfer
           dataSource={this.state.candidates}
           targetKeys={this.state.inputs}
-          listStyle={{ width: 360, height: 360 }}
+          listStyle={{width: 360, height: 360}}
           showSearch
           onChange={this.handleCandidatesChange}
           render={item => item.title}
         />
+        <div style={{marginTop: 24}}>
+          <Button type="primary" style={{marginRight: 16}}>开始本轮投票<Icon type="right" /></Button>
+          <Popconfirm
+            title="确定要终止这个计划吗？"
+            onConfirm={this.confirm}
+            onCancel={this.cancel}
+          >
+            <Button type="ghost">终止</Button>
+          </Popconfirm>
+        </div>
       </div>
     )
   }
