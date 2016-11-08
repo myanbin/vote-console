@@ -1,13 +1,17 @@
 import React from 'react'
 
-import { Input, InputNumber, Select, Radio } from 'antd'
+import { Input, InputNumber, Select, Radio, Row, Col } from 'antd'
 
 
 class RuleInput extends React.Component {
 
   render = () => {
     return (
-      <Input />
+      <Row gutter={16}>
+        <Col span={10}>
+          <Input />
+        </Col>
+      </Row>
     )
   }
 }
@@ -43,13 +47,17 @@ class RuleSelect extends React.Component {
       )
     }
     return (
-      <div>
-        <Select onChange={this.handleChange}>
-          {options}
-          <Select.Option value="-1">其他值</Select.Option>
-        </Select>
-        {this.state.value === '-1' ? <Input /> : null}
-      </div>
+      <Row gutter={16}>
+        <Col span={10}>
+          <Select onChange={this.handleChange}>
+            {options}
+            <Select.Option value="-1">其他值</Select.Option>
+          </Select>
+        </Col>
+        <Col span={6}>
+          {this.state.value === '-1' ? <Input /> : null}
+        </Col>
+      </Row>
     )
   }
 }
