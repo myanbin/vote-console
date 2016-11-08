@@ -26,7 +26,7 @@ class FormDemo extends React.Component {
       wrapperCol: { span: 12 },
     }
     const rules = []
-    this.props.rulesDef.map((rule, index) => {
+    this.props.rules.map((rule, index) => {
       let options = new Map(rule.options)
       rules.push(
         <Form.Item {...formItemLayout} key={index} label={rule.name}>
@@ -44,7 +44,16 @@ class FormDemo extends React.Component {
   }
 }
 
-let RuleForm = Form.create()(FormDemo)
+let RuleForm = Form.create({
+  onFieldsChange: (props, fields) => {
+    props.onChange(fields)
+  },
+  mapPropsToFields: (props) => {
+    const fields = {}
+    console.log(props)
+    return {}
+  }
+})(FormDemo)
 
 class Configure extends React.Component {
 
@@ -52,7 +61,6 @@ class Configure extends React.Component {
     super(props)
 
     this.state = {
-      rulesDef: [],
       rules: [],
       candidates: [],
       inputs: [],
@@ -61,7 +69,7 @@ class Configure extends React.Component {
 
   componentDidMount = () => {
 
-    const rulesDef = [{
+    const rules = [{
       id: 'judges',
       name: '评委人数',
       input: 'text',
@@ -85,18 +93,15 @@ class Configure extends React.Component {
       ],
     }]
 
-    const rules = []
-
-
     const candidates = []
     const inputs = []
 
-    this.setState({rulesDef, rules, candidates, inputs})
+    this.setState({rules, candidates, inputs})
   }
 
 
   handleRulesChange = (rules) => {
-    this.setState()
+    console.log('upper compoment state chang')
   }
 
   handleCandidatesChange = (inputs) => {
@@ -114,7 +119,10 @@ class Configure extends React.Component {
     return (
       <div>
         <h2>参数配置</h2>
-        <RuleForm rulesDef={this.state.rulesDef} onChange={this.handleRulesChange} />
+        <RuleForm
+          rules={this.state.rules}
+          onChange={this.handleRulesChange}
+        />
         <h2>候选项配置</h2>
         <Transfer
           dataSource={this.state.candidates}
@@ -125,7 +133,9 @@ class Configure extends React.Component {
           render={item => item.title}
         />
         <div style={{marginTop: 24}}>
-          <Button type="primary" style={{marginRight: 16}}>开始本轮投票<Icon type="right" /></Button>
+          <Button type="primary" style={{marginRight: 16}}>
+            开始本轮投票<Icon type="right" />
+          </Button>
           <Popconfirm
             title="确定要终止这个计划吗？"
             onConfirm={this.confirm}
