@@ -31,7 +31,8 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './client/index.html'
+      template: './client/index.html',
+      favicon: './client/favicon.ico'
     }),
     new ExtractTextPlugin("styles.css")
   ]

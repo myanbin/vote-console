@@ -4,14 +4,25 @@ import { Input, InputNumber, Select, Radio, Row, Col } from 'antd'
 
 
 class RuleInput extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      value: '23'
+    }
+  }
+
+  handleChange = (value) => {
+    console.log('you input', value)
+  }
 
   render = () => {
     return (
-      <Row gutter={16}>
+      <Input.Group gutter={16}>
         <Col span={10}>
           <Input />
         </Col>
-      </Row>
+      </Input.Group>
     )
   }
 }
@@ -35,7 +46,7 @@ class RuleSelect extends React.Component {
   }
 
   handleChange = (value) => {
-    console.log(value)
+    console.log('you select', value)
     this.setState({value})
   }
 

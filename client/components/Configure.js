@@ -19,18 +19,25 @@ class FormDemo extends React.Component {
     })
   }
 
+  componentWillMount = () => {
+    
+  }
+
   render = () => {
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator, getFieldValue } = this.props.form
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 12 },
     }
     const rules = []
-    this.props.rules.map((rule, index) => {
+    this.props.rulesDef.map((rule, index) => {
       let options = new Map(rule.options)
+      console.log(getFieldValue(rule.id))
       rules.push(
         <Form.Item {...formItemLayout} key={index} label={rule.name}>
-          {getFieldDecorator(rule.id)(
+          {getFieldDecorator(rule.id, {
+            initialValue: getFieldValue(rule.id),
+          })(
             rule.input === 'text' ? <RuleInput /> : <RuleSelect options={options} />
           )}
         </Form.Item>
@@ -45,14 +52,33 @@ class FormDemo extends React.Component {
 }
 
 let RuleForm = Form.create({
+  // 将外部数据转化成 Form 字段属性
+  mapPropsToFields: (props) => {
+    console.log(props)
+    const fields = {}
+    props.rulesDef.map((rule) => {
+      const field = {
+        
+      }
+      Object.assign(fields, field)
+    })
+    console.log(fields)
+    return {
+      judges: {
+        value: '3',
+      },
+      ratio: {
+        value: '0.5',
+      },
+      scores: {
+        value: '0.5|1|1.5|2',
+      },
+    }
+  },
+  // 将 Form 内部字段变化传递给外部组件
   onFieldsChange: (props, fields) => {
     props.onChange(fields)
   },
-  mapPropsToFields: (props) => {
-    const fields = {}
-    console.log(props)
-    return {}
-  }
 })(FormDemo)
 
 class Configure extends React.Component {
@@ -61,7 +87,8 @@ class Configure extends React.Component {
     super(props)
 
     this.state = {
-      rules: [],
+      rulesDef: [],
+      rulesValue: {},
       candidates: [],
       inputs: [],
     }
@@ -69,7 +96,7 @@ class Configure extends React.Component {
 
   componentDidMount = () => {
 
-    const rules = [{
+    const rulesDef = [{
       id: 'judges',
       name: '评委人数',
       input: 'text',
@@ -93,15 +120,31 @@ class Configure extends React.Component {
       ],
     }]
 
+    const rulesValue = {
+      judges: {
+        value: '3',
+      },
+      ratio: {
+        value: '0.5',
+      },
+      scores: {
+        value: '0.5|1|1.5|2',
+      },
+    }
+
     const candidates = []
     const inputs = []
 
-    this.setState({rules, candidates, inputs})
+    this.setState({rulesDef, rulesValue, candidates, inputs})
   }
 
 
   handleRulesChange = (rules) => {
-    console.log('upper compoment state chang')
+    console.log('change', rules)
+    this.setState({
+      rulesValue: {...this.state.rulesValue, ...rules},
+    })
+    console.log(this.state.rulesValue)
   }
 
   handleCandidatesChange = (inputs) => {
@@ -120,7 +163,8 @@ class Configure extends React.Component {
       <div>
         <h2>参数配置</h2>
         <RuleForm
-          rules={this.state.rules}
+          rulesDef={this.state.rulesDef}
+          {...this.state.rulesValue}
           onChange={this.handleRulesChange}
         />
         <h2>候选项配置</h2>
